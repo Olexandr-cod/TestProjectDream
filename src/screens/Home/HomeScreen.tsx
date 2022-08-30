@@ -8,6 +8,7 @@ import {GetPosts} from '../../redux/actions/PostsAction/PostsAction';
 import {RootState} from '../../store/store';
 import styles from './styles';
 import Snackbar from 'react-native-snackbar';
+import Container from '../../components/Layout/Container';
 
 const HomeScreen: React.FC = () => {
   const posts = useSelector((state: RootState) => state.posts);
@@ -41,24 +42,26 @@ const HomeScreen: React.FC = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {posts && posts.loading && <Loader />}
+    <Container>
+      <View style={styles.container}>
+        {posts && posts.loading && <Loader />}
 
-      {posts && posts.posts && (
-        <FlatList
-          data={posts.posts}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={key => key.id.toString()}
-          renderItem={({item}) => <MemoizedPost item={item} />}
+        {posts && posts.posts && (
+          <FlatList
+            data={posts.posts}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={key => key.id.toString()}
+            renderItem={({item}) => <MemoizedPost item={item} />}
+          />
+        )}
+
+        <PostModal
+          isShow={showModal}
+          pressCallback={() => setShowModal(false)}
+          data={comments}
         />
-      )}
-
-      <PostModal
-        isShow={showModal}
-        pressCallback={() => setShowModal(false)}
-        data={comments}
-      />
-    </View>
+      </View>
+    </Container>
   );
 };
 
