@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, Modal, TouchableOpacity, FlatList} from 'react-native';
+import {View, Modal, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import styles from './styles';
 import Loader from '../Loader/Loader';
+import CommentsList from '../../CommentsList/CommentsList';
 
 interface PostModalProps {
   data: any;
@@ -29,25 +30,7 @@ const PostModal: React.FC<PostModalProps> = ({isShow, data, pressCallback}) => {
                 {data && data.loading && <Loader />}
 
                 {data && data.comments && (
-                  <FlatList
-                    data={data.comments}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={key => key.id.toString()}
-                    renderItem={item => {
-                      return (
-                        <View
-                          style={{
-                            backgroundColor: '#fff',
-                            padding: 10,
-                            margin: 10,
-                          }}>
-                          <Text>Email: {item.item.email}</Text>
-                          <Text>Name: {item.item.name}</Text>
-                          <Text>Body: {item.item.body}</Text>
-                        </View>
-                      );
-                    }}
-                  />
+                  <CommentsList dataComment={data.comments} />
                 )}
               </View>
             </View>

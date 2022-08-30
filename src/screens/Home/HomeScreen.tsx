@@ -7,6 +7,7 @@ import {GetComments} from '../../redux/actions/CommentsAction/CommentsActions';
 import {GetPosts} from '../../redux/actions/PostsAction/PostsAction';
 import {RootState} from '../../store/store';
 import styles from './styles';
+import Snackbar from 'react-native-snackbar';
 
 const HomeScreen: React.FC = () => {
   const posts = useSelector((state: RootState) => state.posts);
@@ -17,6 +18,10 @@ const HomeScreen: React.FC = () => {
 
   useEffect(() => {
     dispatch(GetPosts());
+    Snackbar.show({
+      text: 'Дані підвантажено успішно.',
+      duration: Snackbar.LENGTH_SHORT,
+    });
   }, [dispatch]);
 
   const handlerPost = (userId: number) => {
@@ -42,6 +47,7 @@ const HomeScreen: React.FC = () => {
       {posts && posts.posts && (
         <FlatList
           data={posts.posts}
+          showsVerticalScrollIndicator={false}
           keyExtractor={key => key.id.toString()}
           renderItem={({item}) => <MemoizedPost item={item} />}
         />
