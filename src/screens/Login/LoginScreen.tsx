@@ -42,16 +42,14 @@ const LoginScreen: React.FC = () => {
     const usercheck = users.find(
       user => user.username === email && user.password === password,
     );
+
     if (usercheck) {
       navigation.navigate('Home');
-    }
-
-    if (email === '') {
+    } else {
       setErrorEmail(true);
-    }
-    if (password === '') {
       setErrorPass(true);
     }
+
     console.log('RES===', usercheck);
     // setEmail('');
     // setPassword('');
@@ -81,7 +79,11 @@ const LoginScreen: React.FC = () => {
         {errorPass && <Text style={styles.textErr}>Enter your password</Text>}
       </View>
 
-      <ButtonDefault title="Login" onPress={handleSubmit} />
+      {/* <ButtonDefault title="Login" onPress={handleSubmit} /> */}
+      <ButtonDefault
+        title="Login"
+        onPress={() => navigation.navigate('Home')}
+      />
       {errorEmail && errorPass && (
         <View style={styles.containerCenter}>
           <Text style={styles.textErr}>Check your login and password</Text>
